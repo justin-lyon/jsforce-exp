@@ -6,5 +6,7 @@ module.exports = [
   'CspTrustedSite',
   'ConnectedApp',
   'SamlSsoConfig',
-  'CorsWhitelistOrigin'
+  'CorsWhitelistOrigin',
+  'ProfilePasswordPolicy',
+  'ProfileSessionSetting'
 ]

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "jsforce": "^1.9.1"
+    "jsforce": "^1.9.1",
+    "xmlbuilder": "^10.1.1"
   },
   "devDependencies": {},
   "scripts": {
