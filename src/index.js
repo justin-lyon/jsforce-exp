@@ -1,13 +1,13 @@
 const jsforce = require('jsforce')
 const fs = require('fs')
 
-const typesPath = './src/metadata/types.json'
-const itemsPath = './src/metadata/items.json'
-const itemsRoot = './src/metadata/items/'
+const typesPath = './metadata/types.json'
+const membersPath = './metadata/members.json'
+const membersRoot = './metadata/members/'
 
-const config = require('./config/sf.config')
-const creds = require('./config/sf.creds')
-const ignoredTypes = require('./config/ignored.types')
+const config = require('../config/sf.config')
+const creds = require('../config/sf.creds')
+const ignoredTypes = require('./ignored.types')
 
 const conn = new jsforce.Connection(config)
 
@@ -49,10 +49,10 @@ const listByType = (conn, types) => {
 
 const writeLists = fileDescribe => {
   return new Promise((resolve, reject) => {
-    const itemsWriter = fs.createWriteStream(itemsPath)
+    const memberWriter = fs.createWriteStream(membersPath)
 
-    itemsWriter.write(JSON.stringify(fileDescribe, null, 2))
-    itemsWriter.end()
+    memberWriter.write(JSON.stringify(fileDescribe, null, 2))
+    memberWriter.end()
     resolve()
   })
 }
@@ -93,6 +93,7 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
 
   describeTypes(conn)
     .then(result => {
+      writeTypes(result)
       return promisifyDescribes(conn, result)
     })
     .then(results => {
@@ -102,9 +103,9 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
         .filter(r => !!r.items)
         .map(r => {
           return new Promise((resolve, reject) => {
-            const itemWriter = fs.createWriteStream(itemsRoot + r.type + '.json')
-            itemWriter.write(JSON.stringify(r, null, 2))
-            itemWriter.end()
+            const memberWriter = fs.createWriteStream(membersRoot + r.type + '.json')
+            memberWriter.write(JSON.stringify(r, null, 2))
+            memberWriter.end()
             resolve()
           })
         })

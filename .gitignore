@@ -1,4 +1,4 @@
 node_modules
 
-src/config
-src/metadata
+config
+metadata/**/*.json
