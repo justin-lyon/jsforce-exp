@@ -1,14 +1,4 @@
-const getMembers = members => {
-  if(Array.isArray(members)) {
-    return members
-  }
-  return [members]
-}
-
-const filterToUnmanaged = members => {
-  if (!members) console.log('members', members)
-  return getMembers(members).filter(m => !!m.manageableState && m.manageableState !== 'installed')
-}
+const memberModel = require('../models/members')
 
 module.exports = (conn, apiVersion) => {
   const describeMetadata = () => {
@@ -23,18 +13,19 @@ module.exports = (conn, apiVersion) => {
 
   const describeOneMember = type => {
     return new Promise((resolve, reject) => {
-      conn.metadata.list([type], apiVersion, (err, allMembers) => {
+      conn.metadata.list([type], apiVersion, (err, membersDescribe) => {
         if (err) reject(err)
 
         try {
-          //const members = filterToUnmanaged(allMembers)
+          const members = memberModel.readUnmanaged(type.type, membersDescribe)
           resolve({
             type: type.type,
-            members: allMembers
+            members
           })
 
         } catch(e) {
           console.error(`Error for type: ${type.type}`, e)
+          console.error(type.type, membersDescribe)
           reject(e)
         }
       })

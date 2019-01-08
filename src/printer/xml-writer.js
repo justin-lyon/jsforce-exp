@@ -20,28 +20,30 @@ const initPackage = apiVersion => {
 
 const createDocument = (metadata, apiVersion) => {
   const stub = initPackage(apiVersion)
+
   // console.log('metadata: ', JSON.stringify(metadata, null, 2))
   return metadata.reduce((acc, mdt) => {
-    // if (mdt.members.typeof !== 'array') {
-    //   acc.package.types.push({
-    //     name: mdt.type,
-    //     members: [mdt.members]
-    //   })
-    //   return acc
-    // }
-    //console.log('mdt: ', JSON.stringify(mdt, null, 2))
-    const members = util.readMembers(mdt)
-      .filter(m => m.manageableState && m.manageableState !== 'installed')
-      .map(m => {
-        console.log(mdt.type, m)
-        return m
+    // console.log('xmlwriter mdt: ', JSON.stringify(mdt, null, 2))
+
+    const members = []
+    if (mdt.members.length === 0) {
+      members.push({ '#text': '*' })
+      acc.package.types.push({
+        name: mdt.type,
+        members
       })
-      .map(m => m.fullName)
-      .map(name => ({'#text': name}))
-    acc.package.types.push({
-      name: mdt.type,
-      members
-    })
+    }
+
+    // const members = mdt.members
+    //   .map(m => ({'#text': m.fullName || '*'}))
+
+    if(members.length === 0) {
+      members.push({ '#text': '*' })
+    }
+    // acc.package.types.push({
+    //   name: mdt.type,
+    //   members
+    // })
     return acc
   }, stub)
 }

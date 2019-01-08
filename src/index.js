@@ -7,7 +7,6 @@ const ignoredTypes = require('./ignored.types')
 const printer = require('./printer')
 
 const startTime = Date.now()
-const managedPackage = 'installed'
 
 console.log('Starting...')
 
@@ -27,12 +26,12 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
       printer.writeMetadataTypes(orgDescribe)
       return mdtapi.describeMembers(orgDescribe)
     })
-    .then(results => {
+    .then(membersDescribe => {
 
-      //console.log('results', JSON.stringify(results, null, 2))
-      const filtered = results
-        .filter(r => !ignoredTypes.includes(r.type) && r.manageableState !== managedPackage)
-        .filter(r => !!r.members)
+      // console.log('membersDescribe', JSON.stringify(membersDescribe, null, 2))
+      const filtered = membersDescribe
+        .filter(describe => !ignoredTypes.includes(describe.type))
+        //.filter(describe => !!describe.members)
 
       const doPackage = printer.buildPackage(filtered, config.version)
 
@@ -47,5 +46,8 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
       const doneTime = Date.now()
       const runTime = (doneTime - startTime) / 1000
       console.log(`Completed in ${runTime}s.`)
+    })
+    .catch(err => {
+      console.error('Error in main: ', err.message)
     })
 })
