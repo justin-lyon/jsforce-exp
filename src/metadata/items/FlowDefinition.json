@@ -1,0 +1,31 @@
+{
+  "type": "FlowDefinition",
+  "items": [
+    {
+      "createdById": "0051I000000pmJTQAY",
+      "createdByName": "Justin Lyon",
+      "createdDate": "2017-11-16T16:43:45.000Z",
+      "fileName": "flowDefinitions/Case_Status_Changed.flowDefinition",
+      "fullName": "Case_Status_Changed",
+      "id": "3001I000000L9n5QAC",
+      "lastModifiedById": "0051I000000pmJTQAY",
+      "lastModifiedByName": "Justin Lyon",
+      "lastModifiedDate": "2017-11-16T16:45:42.000Z",
+      "manageableState": "unmanaged",
+      "type": "FlowDefinition"
+    },
+    {
+      "createdById": "0051I000000pmJTQAY",
+      "createdByName": "Justin Lyon",
+      "createdDate": "2018-01-16T12:06:34.000Z",
+      "fileName": "flowDefinitions/Test_Flow.flowDefinition",
+      "fullName": "Test_Flow",
+      "id": "3001I000000LEd8QAG",
+      "lastModifiedById": "0051I000000pmJTQAY",
+      "lastModifiedByName": "Justin Lyon",
+      "lastModifiedDate": "2018-01-16T12:08:53.000Z",
+      "manageableState": "unmanaged",
+      "type": "FlowDefinition"
+    }
+  ]
+}

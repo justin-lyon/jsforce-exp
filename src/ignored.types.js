@@ -8,5 +8,6 @@ module.exports = [
   'SamlSsoConfig',
   'CorsWhitelistOrigin',
   'ProfilePasswordPolicy',
-  'ProfileSessionSetting'
+  'ProfileSessionSetting',
+  'AppMenu'
 ]

@@ -1,0 +1,16 @@
+{
+  "type": "RemoteSiteSetting",
+  "items": {
+    "createdById": "0051I000000pmJTQAY",
+    "createdByName": "Justin Lyon",
+    "createdDate": "2017-09-18T17:32:15.000Z",
+    "fileName": "remoteSiteSettings/ApexDevNet.remoteSite",
+    "fullName": "ApexDevNet",
+    "id": "0rp1I0000002PoxQAE",
+    "lastModifiedById": "0051I000000pmJTQAY",
+    "lastModifiedByName": "Justin Lyon",
+    "lastModifiedDate": "2017-09-18T17:32:15.000Z",
+    "manageableState": "unmanaged",
+    "type": "RemoteSiteSetting"
+  }
+}

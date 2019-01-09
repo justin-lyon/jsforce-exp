@@ -1,0 +1,16 @@
+{
+  "type": "EscalationRules",
+  "items": {
+    "createdById": "0051I000000pmJTQAY",
+    "createdByName": "Justin Lyon",
+    "createdDate": "1970-01-01T00:00:00.000Z",
+    "fileName": "escalationRules/Case.escalationRules",
+    "fullName": "Case",
+    "id": "",
+    "lastModifiedById": "0051I000000pmJTQAY",
+    "lastModifiedByName": "Justin Lyon",
+    "lastModifiedDate": "1970-01-01T00:00:00.000Z",
+    "namespacePrefix": "",
+    "type": "EscalationRules"
+  }
+}

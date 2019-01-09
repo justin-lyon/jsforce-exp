@@ -25,25 +25,30 @@ const createDocument = (metadata, apiVersion) => {
   return metadata.reduce((acc, mdt) => {
     // console.log('xmlwriter mdt: ', JSON.stringify(mdt, null, 2))
 
-    const members = []
-    if (mdt.members.length === 0) {
-      members.push({ '#text': '*' })
-      acc.package.types.push({
-        name: mdt.type,
-        members
-      })
-    }
+    // const members = []
+    // if (mdt.members.length === 0) {
+    //   members.push({ '#text': '*' })
+    //   acc.package.types.push({
+    //     name: mdt.type,
+    //     members
+    //   })
+    // }
 
-    // const members = mdt.members
-    //   .map(m => ({'#text': m.fullName || '*'}))
+    const members = mdt.members
+      .map(m => {
+        if(mdt.type === m.fullName) {
+          return { '#text': '*' }
+        }
+        return { '#text': m.fullName }
+      })
 
     if(members.length === 0) {
       members.push({ '#text': '*' })
     }
-    // acc.package.types.push({
-    //   name: mdt.type,
-    //   members
-    // })
+    acc.package.types.push({
+      name: mdt.type,
+      members
+    })
     return acc
   }, stub)
 }

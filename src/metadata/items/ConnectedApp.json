@@ -1,0 +1,15 @@
+{
+  "type": "ConnectedApp",
+  "items": {
+    "createdById": "0051I000000pmJTQAY",
+    "createdByName": "Justin Lyon",
+    "createdDate": "2018-02-06T18:29:56.000Z",
+    "fileName": "connectedApps/localhost.connectedApp",
+    "fullName": "localhost",
+    "id": "09H1I000000U6XbUAK",
+    "lastModifiedById": "0051I000000pmJTQAY",
+    "lastModifiedByName": "Justin Lyon",
+    "lastModifiedDate": "2018-02-07T13:15:03.000Z",
+    "type": "ConnectedApp"
+  }
+}

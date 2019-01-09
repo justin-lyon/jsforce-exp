@@ -1,0 +1,16 @@
+{
+  "type": "ExternalDataSource",
+  "items": {
+    "createdById": "0051I000000pmJTQAY",
+    "createdByName": "Justin Lyon",
+    "createdDate": "2018-04-27T19:33:38.000Z",
+    "fileName": "dataSources/OrderDB.dataSource",
+    "fullName": "OrderDB",
+    "id": "0XC1I000000GpW3WAK",
+    "lastModifiedById": "0051I000000pmJTQAY",
+    "lastModifiedByName": "Justin Lyon",
+    "lastModifiedDate": "2018-04-27T19:33:38.000Z",
+    "manageableState": "unmanaged",
+    "type": "ExternalDataSource"
+  }
+}
