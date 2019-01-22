@@ -17,7 +17,7 @@ module.exports = (conn, apiVersion) => {
         if (err) reject(err)
 
         try {
-          const members = memberModel.readUnmanaged(type.type, membersDescribe)
+          const members = memberModel.readUnmanaged(membersDescribe)
           if (members.length === 0 && membersDescribe && !membersDescribe.length) {
             // console.log('MEMBER :: ' + type.type, JSON.stringify(members, null, 2))
             // console.log('TYPEOF ' + typeof membersDescribe, Array.isArray(membersDescribe))
@@ -50,8 +50,38 @@ module.exports = (conn, apiVersion) => {
       }))
   }
 
+  const readMember = (typeName, fullnames, conn) => {
+    return new Promise((resolve, reject) => {
+      console.log('Retrieving...')
+      conn.metadata.read(typeName, fullnames, (err, data) => {
+        if (err) reject(err)
+
+        console.log('Success...')
+        resolve(data)
+      })
+    })
+  }
+
+  const chunk = (arr, n) => {
+    return arr.reduce((p, cur, i) => {
+      (p[i / n | 0] = p[i / n | 0] || []).push(cur)
+      return p
+    }, [])
+  }
+
+  const readMembers = (typeName, fullNames, conn) => {
+    const chunks = chunk(fullNames, 10)
+
+    const actions = chunks.map(names => {
+      return readMember(typeName, names, conn)
+    })
+
+    return Promise.all(actions)
+  }
+
   return {
     describeMetadata,
-    describeMembers
+    describeMembers,
+    readMembers
   }
 }

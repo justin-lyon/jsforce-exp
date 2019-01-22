@@ -9,14 +9,14 @@
 
 const managedPackage = 'installed'
 
-const readUnmanaged = (type, describe) => {
+const readUnmanaged = (describe) => {
   // console.log(type, describe)
-  return read(type, describe)
+  return read(describe)
    .filter(m => !m.manageableState || (m.manageableState && m.manageableState !== managedPackage))
     // .filter(m => !m.manageableState || (m.manageableState && m.manageableState !== 'unmanaged' && m.manageableState !== managedPackage))
 }
 
-const read = (type, describe) => {
+const read = (describe) => {
   // console.log((describe && !!describe.length))
   // console.log((!describe))
 

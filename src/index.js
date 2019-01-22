@@ -8,30 +8,22 @@ const printer = require('./printer')
 
 const startTime = Date.now()
 
-console.log('Starting...')
-
-const conn = new jsforce.Connection(config)
-conn.login(creds.username, creds.password, (err, userInfo) => {
-  if (err) {
-    console.error('Error logging in: ', err)
-    return
-  }
-
-  const mdtapi = require('./describer')(conn, config.version)
-
-  console.log('UserInfo: ', JSON.stringify(userInfo, null, 2))
-
+const createPackageXml = mdtapi => {
   mdtapi.describeMetadata()
     .then(orgDescribe => {
       printer.writeMetadataTypes(orgDescribe)
       return mdtapi.describeMembers(orgDescribe)
+    })
+    .then(res => {
+      console.log(JSON.stringify(res, null, 2))
+      return res
     })
     .then(membersDescribe => {
 
       // console.log('membersDescribe', JSON.stringify(membersDescribe, null, 2))
       const filtered = membersDescribe
         .filter(describe => !ignoredTypes.includes(describe.type))
-        //.filter(describe => !!describe.members)
+      //.filter(describe => !!describe.members)
 
       const doPackage = printer.buildPackage(filtered, config.version)
 
@@ -50,4 +42,27 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
     .catch(err => {
       console.error('Error in main: ', err.message)
     })
+}
+
+console.log('Starting...')
+
+const conn = new jsforce.Connection(config)
+conn.login(creds.username, creds.password, (err, userInfo) => {
+  if (err) {
+    console.error('Error logging in: ', err)
+    return
+  }
+
+  const mdtapi = require('./describer')(conn, config.version)
+
+  console.log('UserInfo: ', JSON.stringify(userInfo, null, 2))
+
+  createPackageXml(mdtapi)
+
 })
+
+/**
+ * CustomObjectTranslation
+ * CustomTab
+ * TopicsForObjects
+ */
