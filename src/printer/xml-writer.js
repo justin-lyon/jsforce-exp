@@ -33,6 +33,10 @@ const createDocument = (metadata, apiVersion) => {
     //   })
     // }
 
+    // if (mdt.type === 'TopicsForObjects') {
+    //   console.log('TopicsForObjects: ', JSON.stringify(mdt, null, 2))
+    // }
+
     const members = mdt.members
       .map(m => {
         if(mdt.type === m.fullName) {
@@ -41,13 +45,16 @@ const createDocument = (metadata, apiVersion) => {
         return { '#text': m.fullName }
       })
 
-    if(members.length === 0) {
-      members.push({ '#text': '*' })
+    // if(members.length === 0) {
+    //   members.push({ '#text': '*' })
+    // }
+
+    if (members.length > 0) {
+      acc.Package.types.push({
+        name: mdt.type,
+        members
+      })
     }
-    acc.Package.types.push({
-      name: mdt.type,
-      members
-    })
     return acc
   }, stub)
 }

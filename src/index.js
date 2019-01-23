@@ -8,11 +8,11 @@ const printer = require('./printer')
 
 const startTime = Date.now()
 
-const createPackageXml = mdtapi => {
+const createPackageXml = (mdtapi, namespaces) => {
   return mdtapi.describeMetadata()
     .then(orgDescribe => {
       printer.writeMetadataTypes(orgDescribe)
-      return mdtapi.describeMembers(orgDescribe)
+      return mdtapi.describeMembers(orgDescribe, namespaces)
     })
     // .then(res => {
     //   console.log(JSON.stringify(res, null, 2))
@@ -34,20 +34,24 @@ const createPackageXml = mdtapi => {
 
       return Promise.all(actions)
     })
+}
 
+const digestInstalledPackages = (apiVersion, conn) => {
+  return conn.metadata.list([{ type: 'InstalledPackage', folder: null }], apiVersion, conn)
+    .then(installedPackages => {
+      const namespaces = installedPackages.map(pkg => pkg.namespacePrefix).sort()
+      return [...(new Set(namespaces))]
+    })
+    .catch(err => {
+      console.error('Error digesting installed packages: ', { message: err.message, stack: err.stack })
+    })
 }
 
 const end = () => {
-  return new Promise((resolve, reject) => {
-    const doneTime = Date.now()
-    const runTime = (doneTime - startTime) / 1000
-    console.log(`Completed in ${runTime}s.`)
-    resolve()
-  })
-  .catch(err => {
-    console.error('Error in main: ', err.message)
-    reject(err)
-  })
+  const doneTime = Date.now()
+  const runTime = (doneTime - startTime) / 1000
+  console.log(`Completed in ${runTime}s.`)
+  return Promise.resolve()
 }
 
 console.log('Starting...')
@@ -59,12 +63,18 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
     return
   }
 
-  const mdtapi = require('./describer')(conn, config.version)
 
   console.log('UserInfo: ', JSON.stringify(userInfo, null, 2))
 
-  createPackageXml(mdtapi)
+  digestInstalledPackages(config.version, conn)
+  .then(namespaces => {
+      const mdtapi = require('./describer')(conn, config.version, namespaces)
+      return createPackageXml(mdtapi)
+    })
     .then(end)
+    .catch(err => {
+      console.error('Error in main: ', err.message)
+    })
 })
 
 /**

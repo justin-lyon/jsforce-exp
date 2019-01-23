@@ -1,6 +1,14 @@
 const memberModel = require('../models/members')
 
-module.exports = (conn, apiVersion) => {
+module.exports = (conn, apiVersion, namespaces) => {
+  const localMembers = members => {
+    return members.filter(m => {
+      const namespace = m.fullName.substring(0, m.fullName.indexOf('_'))
+      const isNamespaced = namespaces.includes(namespace)
+      return !isNamespaced
+    })
+  }
+
   const describeMetadata = () => {
     return new Promise((resolve, reject) => {
       conn.metadata.describe(apiVersion, (err, result) => {
@@ -17,7 +25,8 @@ module.exports = (conn, apiVersion) => {
         if (err) reject(err)
 
         try {
-          const members = memberModel.readUnmanaged(membersDescribe)
+          const members = localMembers(memberModel.readUnmanaged(membersDescribe))
+
           if (members.length === 0 && membersDescribe && !membersDescribe.length) {
             // console.log('MEMBER :: ' + type.type, JSON.stringify(members, null, 2))
             // console.log('TYPEOF ' + typeof membersDescribe, Array.isArray(membersDescribe))
@@ -46,7 +55,7 @@ module.exports = (conn, apiVersion) => {
         folder: null
       }))
       .map(type => {
-        return describeOneMember(type)
+        return describeOneMember(type, namespaces)
       }))
   }
 

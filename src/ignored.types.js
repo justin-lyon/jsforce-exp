@@ -9,5 +9,6 @@ module.exports = [
   'CorsWhitelistOrigin',
   'ProfilePasswordPolicy',
   'ProfileSessionSetting',
-  'AppMenu'
+  'AppMenu',
+  'Scontrol'
 ]
