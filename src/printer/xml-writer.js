@@ -1,8 +1,6 @@
 const fs = require('fs')
 const xmlbuilder = require('xmlbuilder')
 
-const util = require('../salesforcer')
-
 const packagePath = './metadata/package.xml'
 const config = {
   version: '1.0',
@@ -11,7 +9,8 @@ const config = {
 
 const initPackage = apiVersion => {
   return {
-    package: {
+    Package: {
+      '@xmlns': 'http://soap.sforce.com/2006/04/metadata',
       version: apiVersion,
       types: []
     }
@@ -45,7 +44,7 @@ const createDocument = (metadata, apiVersion) => {
     if(members.length === 0) {
       members.push({ '#text': '*' })
     }
-    acc.package.types.push({
+    acc.Package.types.push({
       name: mdt.type,
       members
     })

@@ -9,15 +9,15 @@ const printer = require('./printer')
 const startTime = Date.now()
 
 const createPackageXml = mdtapi => {
-  mdtapi.describeMetadata()
+  return mdtapi.describeMetadata()
     .then(orgDescribe => {
       printer.writeMetadataTypes(orgDescribe)
       return mdtapi.describeMembers(orgDescribe)
     })
-    .then(res => {
-      console.log(JSON.stringify(res, null, 2))
-      return res
-    })
+    // .then(res => {
+    //   console.log(JSON.stringify(res, null, 2))
+    //   return res
+    // })
     .then(membersDescribe => {
 
       // console.log('membersDescribe', JSON.stringify(membersDescribe, null, 2))
@@ -34,14 +34,20 @@ const createPackageXml = mdtapi => {
 
       return Promise.all(actions)
     })
-    .then(() => {
-      const doneTime = Date.now()
-      const runTime = (doneTime - startTime) / 1000
-      console.log(`Completed in ${runTime}s.`)
-    })
-    .catch(err => {
-      console.error('Error in main: ', err.message)
-    })
+
+}
+
+const end = () => {
+  return new Promise((resolve, reject) => {
+    const doneTime = Date.now()
+    const runTime = (doneTime - startTime) / 1000
+    console.log(`Completed in ${runTime}s.`)
+    resolve()
+  })
+  .catch(err => {
+    console.error('Error in main: ', err.message)
+    reject(err)
+  })
 }
 
 console.log('Starting...')
@@ -58,11 +64,15 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
   console.log('UserInfo: ', JSON.stringify(userInfo, null, 2))
 
   createPackageXml(mdtapi)
-
+    .then(end)
 })
 
 /**
  * CustomObjectTranslation
  * CustomTab
  * TopicsForObjects
+ */
+
+/**
+ * Layout
  */
