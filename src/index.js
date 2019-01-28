@@ -14,16 +14,10 @@ const createPackageXml = (mdtapi, namespaces) => {
       printer.writeMetadataTypes(orgDescribe)
       return mdtapi.describeMembers(orgDescribe, namespaces)
     })
-    // .then(res => {
-    //   console.log(JSON.stringify(res, null, 2))
-    //   return res
-    // })
     .then(membersDescribe => {
 
-      // console.log('membersDescribe', JSON.stringify(membersDescribe, null, 2))
       const filtered = membersDescribe
         .filter(describe => !ignoredTypes.includes(describe.type))
-      //.filter(describe => !!describe.members)
 
       const doPackage = printer.buildPackage(filtered, config.version)
 
@@ -63,17 +57,16 @@ conn.login(creds.username, creds.password, (err, userInfo) => {
     return
   }
 
-
   console.log('UserInfo: ', JSON.stringify(userInfo, null, 2))
 
   digestInstalledPackages(config.version, conn)
-  .then(namespaces => {
-      const mdtapi = require('./describer')(conn, config.version, namespaces)
-      return createPackageXml(mdtapi)
-    })
+    .then(namespaces => {
+        const mdtapi = require('./describer')(conn, config.version, namespaces)
+        return createPackageXml(mdtapi)
+      })
     .then(end)
     .catch(err => {
-      console.error('Error in main: ', err.message)
+      console.error('Error in main: ' + err.message, err.stack)
     })
 })
 

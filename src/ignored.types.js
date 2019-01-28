@@ -1,14 +1,17 @@
 module.exports = [
-  'InstalledPackage',
+  'ApexTestSuite',
+  'AppMenu',
+  'AuthProvider',
   'Certificate',
-  'NamedCredential',
-  'RemoteSiteSetting',
-  'CspTrustedSite',
+  'ChannelLayout',
   'ConnectedApp',
-  'SamlSsoConfig',
   'CorsWhitelistOrigin',
+  'CspTrustedSite',
+  'InstalledPackage',
+  'NamedCredential',
   'ProfilePasswordPolicy',
   'ProfileSessionSetting',
-  'AppMenu',
+  'RemoteSiteSetting',
+  'SamlSsoConfig',
   'Scontrol'
 ]

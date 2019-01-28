@@ -27,12 +27,6 @@ module.exports = (conn, apiVersion, namespaces) => {
         try {
           const members = localMembers(memberModel.readUnmanaged(membersDescribe))
 
-          if (members.length === 0 && membersDescribe && !membersDescribe.length) {
-            // console.log('MEMBER :: ' + type.type, JSON.stringify(members, null, 2))
-            // console.log('TYPEOF ' + typeof membersDescribe, Array.isArray(membersDescribe))
-            // console.log('DESCRIBE :: ' + type.type, JSON.stringify(membersDescribe, null, 2))
-
-          }
           resolve({
             type: type.type,
             members

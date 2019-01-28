@@ -16,9 +16,6 @@ const writeMetadataTypes = orgDescribe => {
 const writeMember = mdt => {
   return new Promise((resolve, reject) => {
     const memberWriter = fs.createWriteStream(membersRoot + mdt.type + '.json')
-    // if (mdt.members.length === 0) {
-    //   console.log('mdt: ', JSON.stringify(mdt, null, 2))
-    // }
     memberWriter.write(JSON.stringify(mdt, null, 2))
     memberWriter.end()
     resolve()

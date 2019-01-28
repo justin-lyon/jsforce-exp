@@ -20,23 +20,7 @@ const initPackage = apiVersion => {
 const createDocument = (metadata, apiVersion) => {
   const stub = initPackage(apiVersion)
 
-  // console.log('metadata: ', JSON.stringify(metadata, null, 2))
   return metadata.reduce((acc, mdt) => {
-    // console.log('xmlwriter mdt: ', JSON.stringify(mdt, null, 2))
-
-    // const members = []
-    // if (mdt.members.length === 0) {
-    //   members.push({ '#text': '*' })
-    //   acc.package.types.push({
-    //     name: mdt.type,
-    //     members
-    //   })
-    // }
-
-    // if (mdt.type === 'TopicsForObjects') {
-    //   console.log('TopicsForObjects: ', JSON.stringify(mdt, null, 2))
-    // }
-
     const members = mdt.members
       .map(m => {
         if(mdt.type === m.fullName) {
@@ -44,10 +28,6 @@ const createDocument = (metadata, apiVersion) => {
         }
         return { '#text': m.fullName }
       })
-
-    // if(members.length === 0) {
-    //   members.push({ '#text': '*' })
-    // }
 
     if (members.length > 0) {
       acc.Package.types.push({
